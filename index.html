@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time & Date Difference Calculator</title>
+    <meta name="description" content="A simple and user-friendly time and date difference calculator. Calculate time differences in hours, minutes, seconds, and milliseconds, and find the difference between two dates in days and years.">
+    <meta name="keywords" content="Time Calculator, Date Calculator, Time Difference, Date Difference">
+    <meta name="author" content="Your Name">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .result-box div {
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 60px;
+            text-align: center;
+            background: #007bff;
+            color: white;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #343a40;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark p-3">
+        <a class="navbar-brand mx-auto" href="#"><i class="fa-solid fa-clock"></i> Time & Date Calculator</a>
+    </nav>
+    
+    <div class="container text-center">
+        <h2><i class="fa-solid fa-hourglass"></i> Time Difference Calculator</h2>
+        <input type="text" class="form-control mb-2" id="time1" placeholder="HH:MM:SS,SSS">
+        <input type="text" class="form-control mb-2" id="time2" placeholder="HH:MM:SS,SSS">
+        <button class="btn btn-primary" onclick="calculateTimeDiff()">Calculate</button>
+        
+        <div class="result-box mt-3">
+            <div><strong>Hrs:</strong> <span id="hours"></span></div>
+            <div><strong>Min:</strong> <span id="minutes"></span></div>
+            <div><strong>Sec:</strong> <span id="seconds"></span></div>
+            <div><strong>Ms:</strong> <span id="milliseconds"></span></div>
+        </div>
+        
+        <h2 class="mt-4"><i class="fa-solid fa-calendar"></i> Date Difference Calculator</h2>
+        <input type="date" class="form-control mb-2" id="date1">
+        <input type="date" class="form-control mb-2" id="date2">
+        <button class="btn btn-success" onclick="calculateDateDiff()">Calculate</button>
+        <p id="dateResult" class="mt-3"></p>
+    </div>
+    
+    <footer>
+        <p>© 2025 Time & Date Calculator | Designed for ease of use</p>
+    </footer>
+
+    <script>
+        function parseTime(time) {
+            let parts = time.split(/[:,]/).map(Number);
+            return (parts[0] * 3600000) + (parts[1] * 60000) + (parts[2] * 1000) + parts[3];
+        }
+
+        function calculateTimeDiff() {
+            let time1 = document.getElementById("time1").value;
+            let time2 = document.getElementById("time2").value;
+            
+            let ms1 = parseTime(time1);
+            let ms2 = parseTime(time2);
+            let diff = Math.abs(ms2 - ms1);
+            
+            let hours = Math.floor(diff / 3600000);
+            let minutes = Math.floor((diff % 3600000) / 60000);
+            let seconds = Math.floor((diff % 60000) / 1000);
+            let milliseconds = diff % 1000;
+            
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+            document.getElementById("milliseconds").innerText = milliseconds;
+        }
+
+        function calculateDateDiff() {
+            let date1 = new Date(document.getElementById("date1").value);
+            let date2 = new Date(document.getElementById("date2").value);
+            
+            let diffMs = Math.abs(date2 - date1);
+            let diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            let diffYears = diffDays / 365.25;
+            
+            document.getElementById("dateResult").innerText = `Difference: ${diffDays} days (${diffYears.toFixed(2)} years)`;
+        }
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
