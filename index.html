@@ -38,6 +38,12 @@
             background: #007bff;
             color: white;
         }
+        .milliseconds-box {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #007bff;
+        }
         footer {
             text-align: center;
             padding: 10px;
@@ -57,6 +63,8 @@
         <input type="text" class="form-control mb-2" id="time1" placeholder="HH:MM:SS,SSS">
         <input type="text" class="form-control mb-2" id="time2" placeholder="HH:MM:SS,SSS">
         <button class="btn btn-primary" onclick="calculateTimeDiff()">Calculate</button>
+        
+        <div class="milliseconds-box" id="totalMilliseconds"></div>
         
         <div class="result-box mt-3">
             <div><strong>Hrs:</strong> <span id="hours"></span></div>
@@ -95,6 +103,7 @@
             let seconds = Math.floor((diff % 60000) / 1000);
             let milliseconds = diff % 1000;
             
+            document.getElementById("totalMilliseconds").innerText = `${diff} Milliseconds`;
             document.getElementById("hours").innerText = hours;
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
